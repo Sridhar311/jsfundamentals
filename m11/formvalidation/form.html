@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form validation</title>
+</head>
+<body>
+    <form id="mform">
+        <input type="email" id="email" placeholder="Enter your email"><br>
+        <input type="text" id="phone" placeholder="Enter your phone no"><br>
+        <input type="password" id="password" placeholder="Enter your password">
+        <button type="submit">Submit</button>
+    </form>
+    <p id="message"></p>
+    <script>
+        function validmail(email){
+            const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return pattern.test(email);
+        }
+
+        function validphone(phone){
+            const pattern = /^[0-9]{10}$/;
+            return pattern.test(phone);
+        }
+
+        function validpass(pass){
+            const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return pattern.test(pass);
+        }
+
+        document.getElementById("mform").addEventListener("submit",function(e){
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const pass = document.getElementById("password").value;
+
+            if(!validmail(email)){
+                return showMessage("Invalid email");
+            }
+
+            if(!validphone(phone)){
+                return showMessage("Invalid phone");
+            }
+
+            if(!validpass(pass)){
+                return showMessage("Weak password");
+            }
+
+            showMessage("Form submitted successfully");
+        });
+        function showMessage(msg){
+            document.getElementById("message").innerText=msg;
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form validator</title>
+</head>
+<body>
+        <form id="mform">
+            <input type="email" id="email"><br>
+            <input type="text" id="phone"><br>
+            <input type="password" id="password"><p id="strength-text"></p><br>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="message"></p>
+        <script>
+            const passwordInput = document.getElementById("password");
+            const strengthText = document.getElementById("strength-text");
+
+            passwordInput.addEventListener("input", function() {
+            const password = passwordInput.value;
+            const strength = getStrength(password);
+            updateStrengthUI(strength);
+            });
+
+            function getStrength(password){
+                let score=0;
+                if(password.length>=8) score+=1;
+                if(/[a-z]/.test(password)) score+=1;
+                if(/[A-Z]/.test(password)) score+=1;
+                if(/\d/.test(password)) score+=1;
+                if(/[!@#$%^&*?]/.test(password)) score+=1;
+                return score
+            }
+            function updateStrengthUI(score) {
+
+            if (score <= 2) {
+                strengthText.innerText = "Weak";
+                strengthText.style.color = "red";
+            } else if (score === 3 || score === 4) {
+                strengthText.innerText = "Medium";
+                strengthText.style.color = "orange";
+            } else if (score === 5) {
+                strengthText.innerText = "Strong";
+                strengthText.style.color = "green";
+            } else {
+                strengthText.innerText = "";
+            }
+            }
+            function validmail(email){
+                const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return pattern.test(email);
+            }
+            function validphone(phone){
+                const pattern=/^[0-9]{10}$/;
+                return pattern.test(phone);
+            }
+            function validpass(password){
+                const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                return pattern.test(password);
+            }
+            document.getElementById("mform").addEventListener("submit",function(e){
+                e.preventDefault();
+                const email=document.getElementById("email").value;
+                const phone=document.getElementById("phone").value;
+                const password=document.getElementById("password").value;
+                if(!validmail(email)){
+                    return showMessage("Invalid email")
+                }
+                if(!validphone(phone)){
+                    return showMessage("Invalid phone no");
+                }
+                if(!validpass(password)){
+                    return showMessage("Weak password");
+                }
+                return showMessage("Form submitted sucessfully")
+            })
+            function showMessage(msg){
+                document.getElementById("message").innerText=msg;
+            }
+        </script>
+</body>
+</html>

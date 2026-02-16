@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fetch API Example</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 10px; border-bottom: 1px solid #ccc; }
+    .loading { font-weight: bold; color: blue; }
+    .error { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2>Users List</h2>
+<p id="status" class="loading">Loading...</p>
+<ul id="userList"></ul>
+
+<script>
+const status=document.getElementById("status");
+const userlist=document.getElementById("userList");
+fetch("https://jsonplaceholder.typicode.com/users")
+.then((response)=>{
+    if(!response.ok){
+        throw new Error("Network response was not OK");
+    }
+    return response.json();
+})
+.then((data)=>{
+    status.innerText="";
+    data.forEach((user)=>{
+        const li=document.createElement("li");
+        li.innerHTML=`<strong> ${user.name} </strong> - ${user.email}`;
+        userlist.appendChild(li);
+    });
+}) 
+.catch((error)=>{
+    status.className="error";
+    status.innerText="Error Fetching data: "+error;
+    console.error(error); 
+});
+</script>
+
+</body>
+</html>

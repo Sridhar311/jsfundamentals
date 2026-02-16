@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Filter</title>
+</head>
+<body>
+  <h2>Search Products</h2>
+  <input type="text" id="search" placeholder="Search product...">
+  <ul id="productList"></ul>
+<script>
+const products = [
+  "Shirt",
+  "Shoes",
+  "Watch",
+  "Laptop",
+  "Phone",
+  "Bag",
+  "Iphone",
+  "Samsung",
+  "bottle"
+];
+const list = document.getElementById("productList");
+const searchInput = document.getElementById("search");
+function renderli(items){
+    list.innerHTML="";
+    items.forEach((item)=>{
+        list.innerHTML+=`<li>${item}</li>`
+    });
+}
+
+renderli(products);
+searchInput.addEventListener("input",function(){
+    const searchval=searchInput.value.toLowerCase();
+    const filtered=products.filter(product=>product.toLowerCase().includes(searchval));
+    renderli(filtered);
+});
+</script>
+
+</body>
+</html>

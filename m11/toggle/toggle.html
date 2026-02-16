@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sidebar Toggle</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+    }
+    .sidebar {
+      width: 250px;
+      height: 100%;
+      background-color: #333;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: -250px; 
+      transition: left 0.3s;
+      padding: 20px;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .content {
+      margin-left: 20px;
+      padding: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+  <h2>Sidebar Menu</h2>
+  <ul>
+    <li>Home</li>
+    <li>Products</li>
+    <li>Contact</li>
+    <li>About</li>
+  </ul>
+</div>
+
+<div class="content">
+  <button id="toggleBtn">Toggle Sidebar</button>
+</div>
+
+<script>
+const sidebar = document.getElementById("sidebar");
+const toggleBtn = document.getElementById("toggleBtn");
+
+toggleBtn.addEventListener("click", function(e) {
+  sidebar.classList.toggle("active");
+  e.stopPropagation();
+  
+});
+document.body.addEventListener("click", function(e) {
+  if (sidebar.classList.contains("active") &&
+      !sidebar.contains(e.target) &&
+      e.target !== toggleBtn) {
+    sidebar.classList.remove("active");
+  }
+});
+sidebar.addEventListener("click", function(e) {
+  e.stopPropagation();
+});
+</script>
+
+</body>
+</html>
