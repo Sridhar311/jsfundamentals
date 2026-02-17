@@ -1,17 +1,17 @@
 const apiKey = "5d69e963f1fd054f77f12fe88d197d7b";
-const searchb=document.getElementById("search");
-const weatherdiv=document.getElementById("weather");
-const cityinput=document.getElementById("city");
-searchb.addEventListener("click",()=>{
-    const city=cityinput.value.trim();
+const searchButton=document.getElementById("search");
+const weatherDiv=document.getElementById("weather");
+const cityInput=document.getElementById("city");
+searchButton.addEventListener("click",()=>{
+    const city=cityInput.value.trim();
     if(city===""){
-        weatherdiv.innerHTML="Please Enter a city name";
+        weatherDiv.innerHTML="please enter your city";
         return;
     }
-    getweather(city);
+    getWeather(city);
 });
-async function getweather(city){
-    weatherdiv.innerHTML="Loading...";
+async function getWeather(city){
+    weatherDiv.innerHTML="Loading";
     try{
         const response=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`);
         if(!response.ok){
@@ -21,11 +21,11 @@ async function getweather(city){
         displayWeather(data);
     }
     catch(error){
-        weatherdiv.innerHTML=error.message;
+        weatherDiv.innerHTML=error.message
     }
 }
 function displayWeather(data) {
-    weatherdiv.innerHTML = `
+    weatherDiv.innerHTML = `
         <h2>${data.name}, ${data.sys.country}</h2>
         <p>Temperature: ${data.main.temp}°C</p>
         <p>Weather: ${data.weather[0].description}</p>
